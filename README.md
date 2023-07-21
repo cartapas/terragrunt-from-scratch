@@ -1,12 +1,23 @@
 # Terragrunt from scratch
 
+This project was created to document the Terragrunt/Terraform project creation from scratch.
+
+- [Requirements](#requirements)
+- [Directory Structure](#directory-structure)
+- [AWS Credentials](#aws-credentials)
+- [GitHub Credentials](#github-credentials)
+
+## Requirements
+
 The code in this project was tested using the following tooling version:
 - [Terraform 1.1.3.](https://releases.hashicorp.com/terraform/1.1.3/)
 - [Terragrunt 0.45.8](https://github.com/gruntwork-io/terragrunt/releases/tag/v0.45.8)
 
+## Directory Structure
+
 The initial directory estructure includes the following:
 - environments/
-  - github/
+  - **github/** Folder with configuration per every environment such as develop, staging, production, github, aws-configuration, among others.
     - **common_tags.yaml.** Common variables required along the module for tagging or creating resources.
     - **provider.tf.** GitHub, AWS and Terraform providers configuration.
     - **README.md.** Module documentation.
@@ -18,8 +29,9 @@ The initial directory estructure includes the following:
 - README.md
 - **terragrunt.hcl.** Extra arguments being passed to Terraform.
 
-## AWS credentials
-Configure **AWS Vault** tool to securely store and access AWS credentials in your development environment.
+## AWS Credentials
+
+Configuring the **AWS Vault** tool to securely store and access AWS credentials in your development environment.
 
 Choose the prefered method for install aws-vault from https://github.com/99designs/aws-vault#installing
 
@@ -50,8 +62,15 @@ After this, you can run several commands, for example, a terragrunt plan:
 ```
 $ aws-vault exec marqued2 --no-session -- terragrunt plan
 ```
-## GitHub credentials
-In order to use the GitHub API, create a PAT with the necessary permissions (managing repos, read teams info) and pass it with the Organization through the OS ENV vars.
+## GitHub Credentials
+
+In order to use the GitHub API, create a Personal Access token (PAT) with the following permissions:
+```
+ repo Full control of private repositories
+ admin:org Full control of orgs and teams, read and write org projects
+ delete_repo Delete repositories
+```
+Pass the parameters with the through the OS ENVIRONMENT vars.
 ```
 $ export GITHUB_TOKEN="XXXXXXXXX"
 $ export GITHUB_OWNER="Porsche-Digital-Inc"
