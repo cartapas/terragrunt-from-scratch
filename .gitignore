@@ -1,0 +1,6 @@
+backend.tf
+.terraform
+*.tfplan
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
