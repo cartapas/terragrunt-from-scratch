@@ -156,7 +156,7 @@ module "iam-AllUsers-group" {
 
   name = "AllUsers"
   policy_arn = [
-    module.iam-policy.policy_arn["WizelineMFApolicy"]
+    module.iam-policy.policy_arn["CustomMFApolicy"]
   ]
 }
 
@@ -168,7 +168,7 @@ module "iam-Developers-group" {
     "arn:aws:iam::aws:policy/ReadOnlyAccess",
     "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
     "arn:aws:iam::aws:policy/IAMUserChangePassword",
-    module.iam-policy.policy_arn["WizelineDeveloperLocalS3Policy"]
+    module.iam-policy.policy_arn["CustomDeveloperLocalS3Policy"]
   ]
 }
 
@@ -177,7 +177,7 @@ module "iam-Admins-group" {
 
   name = "Admins"
   policy_arn = [
-    module.iam-policy.policy_arn["WizelineResourceDeletionDeny"],
+    module.iam-policy.policy_arn["CustomResourceDeletionDeny"],
     "arn:aws:iam::aws:policy/AdministratorAccess"
   ]
 }
