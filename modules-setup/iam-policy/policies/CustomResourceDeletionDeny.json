@@ -1,0 +1,82 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Action": [
+                "s3:DeleteBucket",
+                "s3:DeleteBucketPolicy",
+                "s3:DeleteBucketWebsite",
+                "s3:DeleteObjectVersion",
+                "s3:DeleteObjectVersionTagging"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "ec2:DeleteSnapshot",
+                "ec2:TerminateInstances"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "rds:DeleteDBCluster",
+                "rds:DeleteDBInstance",
+                "rds:DeleteDBSnapshot"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "elasticloadbalancing:DeleteLoadBalancer"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+	      {
+            "Effect": "Deny",
+            "Action": [
+                "elasticfilesystem:DeleteAccessPoint",
+		        "elasticfilesystem:DeleteFileSystem",
+		        "elasticfilesystem:DeleteFileSystemPolicy",
+		        "elasticfilesystem:DeleteMountTarget",
+		        "elasticfilesystem:DeleteTags"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "route53:DeleteHostedZone"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "cloudtrail:DeleteTrail",
+                "cloudtrail:PutEventSelectors",
+                "cloudtrail:StopLogging",
+                "cloudtrail:UpdateTrail"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
