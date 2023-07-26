@@ -16,14 +16,44 @@ The code in this project was tested using the following tooling version:
 ## Directory Structure
 
 The initial directory estructure includes the following:
-- environments/
-  - **github/** Folder with configuration per every environment such as develop, staging, production, github, aws-configuration, among others.
+- **environments/**
+  - **account-setup/**
+    - **common_tags.yaml.** Common variables required along the module for tagging or creating resources.
+    - **main.tf.** Module calling with the custom variables from environment.
+    - **provider.tf.** AWS and Terraform providers configuration.
+    - **terragrunt.hcl.** Definition of the environment variables passed to Terragrunt and remote state configuration.
+    - **variables.tf.** Variables passed from Terragrunt to Terraform according to the environment.
+  - **develop/**
+    - **common_tags.yaml.** Common variables required along the module for tagging or creating resources.
+    - **data.tf.** Data resources required in the environment
+    - **main.tf.** Module calling with the custom variables from environment.
+    - **provider.tf.** AWS and Terraform providers configuration.
+    - **terragrunt.hcl.** Definition of the environment variables passed to Terragrunt and remote state configuration.
+    - **variables.tf.** Variables passed from Terragrunt to Terraform according to the environment.
+  - **github-setup/** Folder with configuration per every environment such as develop, staging, production, github, aws-configuration, among others.
     - **common_tags.yaml.** Common variables required along the module for tagging or creating resources.
     - **provider.tf.** GitHub, AWS and Terraform providers configuration.
     - **README.md.** Module documentation.
     - **repo1.tf.** Definitions of the repo1. Copy this file to create different repositories with its own definitions.s
-    - **terragrunt.hcl** Definition of the environment variables passed to Terraform and remote state configuration.
-    - **variables.tf.** Variables passed from Terragrunt to Terraform.
+    - **terragrunt.hcl** Definition of the environment variables passed to Terragrunt and remote state configuration.
+    - **variables.tf.** Variables passed from Terragrunt to Terraform according to the environment.
+- **modules/**
+  - **network/**
+    - outputs.
+    - provider.
+    - README.md
+    - variables.tf
+    - vpc.tf
+- **modules-setup/**
+  - account-password-policy
+  - AWSconfig
+  - cloudtrail-main
+  - iam-group
+  - iam-policy
+  - iam-role
+  - iam-user
+  - sns
+- .gitignore
 - .terraform-version
 - .terragrunt-version
 - README.md
@@ -75,3 +105,29 @@ Pass the parameters with the through the OS ENVIRONMENT vars.
 $ export GITHUB_TOKEN="XXXXXXXXX"
 $ export GITHUB_OWNER="Porsche-Digital-Inc"
 ```
+
+## Environments deployment
+
+Deploying every environment and its modules in the following order:
+
+1. **github-setup.** Allows the creation of private repositories with at least an admin team attached to it. The main/master branch is our source of truth.
+2. **account-setup.** Use this environment to customize some AWS account parameters such as:
+  1. **AWS CloudTrail.** AWS services auditing tool. It saves a history of API calls for your AWS account, so that you can easily track unauthorized access to AWS account.
+  2. **AWS SNS.** Enabling SNS notifications to the server admin email configured in the common_tags file.
+  3. **AWS Account Password Policy.** Define password strength specifications.
+  4. **AWS Config.** Several customizations regarding the AWS Config service. Some rules included:
+    - ACCESS_KEYS_ROTATED
+    - DB_INSTANCE_BACKUP_ENABLED
+    - IAM_PASSWORD_POLICY
+    - MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS
+    - RDS_INSTANCE_DELETION_PROTECTION_ENABLED
+    - RDS_INSTANCE_PUBLIC_ACCESS_CHECK
+    - S3_BUCKET_VERSIONING_ENABLED
+  5. **AWS IAM Policy.** Its purpose is distributing the custom IAM policies which can be attached to other resources then (IAM roles, users, etc.)
+  6. **IAM User Groups.**
+    - All users.
+    - Developers.
+    - Admin.
+    - Project Managers.
+3. **develop.** Environment used for new features/solve bugs and all that implementation entails.
+  1. **network.** VPC, subnets, Internet Gateway, NAT Gateway, Elastic IP, Routing Tables and Internal subdomain zone definitions.
